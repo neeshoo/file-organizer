@@ -1,5 +1,6 @@
 import os
 import shutil
+from datetime import datetime
 from categories import FILE_CATEGORIES
 
 
@@ -26,6 +27,17 @@ def get_unique_filename(destination_path):
         counter += 1
 
 
+def write_log(folder_path, file_name, category):
+
+    log_file = os.path.join(folder_path, "log.txt")
+
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    with open(log_file, "a", encoding="utf-8") as log:
+        log.write(
+            f"{timestamp} - Moved: {file_name} -> {category}\n"
+        )
+
 def organize_files(folder_path):
 
     for file in os.listdir(folder_path):
@@ -51,6 +63,7 @@ def organize_files(folder_path):
                 destination = get_unique_filename(destination)
 
                 shutil.move(file_path, destination)
+                write_log(folder_path, os.path.basename(destination), category)
 
                 moved = True
                 break
@@ -65,6 +78,7 @@ def organize_files(folder_path):
             destination = get_unique_filename(destination)
 
             shutil.move(file_path, destination)
+            write_log(folder_path, os.path.basename(destination), "Others")
 
 
 if __name__ == "__main__":
