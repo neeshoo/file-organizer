@@ -23,7 +23,8 @@ Built with **Python**, **Tkinter**, and packaged as a standalone Windows applica
 
 ### Main Interface
 
-*Add screenshot here*
+https://github.com/neeshoo/file-organizer/blob/main/Screenshot/2.png
+<img width="987" height="717" alt="2" src="https://github.com/user-attachments/assets/a60aa708-cc28-4b2d-9ecb-b25369479e30" />
 
 ### Preview Mode
 
