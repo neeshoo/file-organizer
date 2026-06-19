@@ -1,8 +1,7 @@
 import os
 import shutil
 from datetime import datetime
-from categories import FILE_CATEGORIES
-
+from categories import load_categories
 
 def get_unique_filename(destination_path):
     """
@@ -39,8 +38,9 @@ def write_log(folder_path, file_name, category):
         )
 
 def organize_files(folder_path, preview=False):
+    FILE_CATEGORIES = load_categories()
+
     preview_data = []
-       
     IGNORE_FILES = ["log.txt"]
 
     for file in os.listdir(folder_path):
@@ -55,6 +55,9 @@ def organize_files(folder_path, preview=False):
             continue
 
         extension = os.path.splitext(file)[1].lower()
+        
+
+        
 
         moved = False
 

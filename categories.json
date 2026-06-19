@@ -1,0 +1,11 @@
+{
+    "Documents": [".pdf", ".docx", ".txt"],
+    "Images": [".jpg", ".jpeg", ".png", ".gif"],
+    "Videos": [".mp4", ".avi", ".mkv"],
+    "Audio": [".mp3", ".wav"],
+    "Archives": [".zip", ".rar"],
+    "Code": [".py", ".html", ".css", ".js"],
+    "Data": [".csv", ".xlsx"],
+    "Designs": [".psd", ".fig"]
+}
+
