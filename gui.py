@@ -14,8 +14,6 @@ def browse_folder():
 
 
 def start_organizing():
-    status_label.config(text="Files organized successfully!")
-    status_label.config(text=f"Error: {e}", fg="red")
 
     path = folder_path.get()
 
@@ -29,17 +27,17 @@ def start_organizing():
     try:
         organize_files(path)
 
-        messagebox.showinfo(
-            "Success",
-            "Files organized successfully!"
+        status_label.config(
+            text="Files organized successfully!",
+            fg="green"
         )
 
     except Exception as e:
-        messagebox.showerror(
-            "Error",
-            str(e)
-        )
 
+        status_label.config(
+            text=f"Error: {e}",
+            fg="red"
+        )
 
 root = tk.Tk()
 root.title("File Organizer")
