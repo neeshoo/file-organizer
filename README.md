@@ -23,16 +23,21 @@ Built with **Python**, **Tkinter**, and packaged as a standalone Windows applica
 
 ### Main Interface
 
-https://github.com/neeshoo/file-organizer/blob/main/Screenshot/2.png
+
 <img width="987" height="717" alt="2" src="https://github.com/user-attachments/assets/a60aa708-cc28-4b2d-9ecb-b25369479e30" />
 
 ### Preview Mode
 
-*Add screenshot here*
+<img width="1137" height="839" alt="preview" src="https://github.com/user-attachments/assets/869df31d-7f23-42a1-ae73-ef5e37213a30" />
+
 
 ### Before and After Organization
 
-*Add screenshots here*
+<img width="1688" height="893" alt="before" src="https://github.com/user-attachments/assets/db19a773-50b7-4ca6-a444-3e407f3f78bb" />
+
+<img width="1754" height="784" alt="after" src="https://github.com/user-attachments/assets/6e004e1a-2aa4-43e8-bc52-a323f50da0c4" />
+
+
 
 ---
 
