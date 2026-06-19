@@ -5,6 +5,9 @@ A modern Python-based desktop application that automatically organizes files int
 Built with **Python**, **Tkinter**, and packaged as a standalone Windows application using **PyInstaller** and **Inno Setup**.
 
 ---
+## 📥 Download
+
+https://github.com/neeshoo/file-organizer/releases/download/v1.0.0/FileOrganizerSetup.exe
 
 ## ✨ Features
 
