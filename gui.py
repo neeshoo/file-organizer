@@ -1,7 +1,11 @@
-import tkinter as tk
+import customtkinter as ctk
 from tkinter import filedialog, messagebox
 
 from organizer import organize_files
+from categories import load_categories, save_categories
+
+ctk.set_appearance_mode("dark")
+ctk.set_default_color_theme("blue")
 
 
 def browse_folder():
@@ -31,20 +35,15 @@ def start_organizing():
                 preview=True
             )
 
-            if result:
-                messagebox.showinfo(
-                    "Preview",
-                    "\n".join(result)
-                )
-            else:
-                messagebox.showinfo(
-                    "Preview",
-                    "No files found to organize."
-                )
+            preview_text = "\n".join(result) if result else "No files found."
 
-            status_label.config(
-                text="Preview generated successfully!",
-                fg="blue"
+            messagebox.showinfo(
+                "Preview",
+                preview_text
+            )
+
+            status_label.configure(
+                text="Preview generated successfully!"
             )
 
         else:
@@ -56,9 +55,8 @@ def start_organizing():
                 "Files organized successfully!"
             )
 
-            status_label.config(
-                text="Files organized successfully!",
-                fg="green"
+            status_label.configure(
+                text="Files organized successfully!"
             )
 
     except Exception as e:
@@ -68,74 +66,132 @@ def start_organizing():
             str(e)
         )
 
-        status_label.config(
-            text=f"Error: {e}",
-            fg="red"
+        status_label.configure(
+            text=f"Error: {e}"
         )
 
 
-# Main Window
-root = tk.Tk()
+def open_category_manager():
+
+    manager = ctk.CTkToplevel(root)
+    manager.title("Manage Categories")
+    manager.geometry("400x300")
+
+    ctk.CTkLabel(
+        manager,
+        text="Category Name"
+    ).pack(pady=10)
+
+    category_entry = ctk.CTkEntry(
+        manager,
+        width=250
+    )
+    category_entry.pack()
+
+    ctk.CTkLabel(
+        manager,
+        text="Extensions (.psd,.fig)"
+    ).pack(pady=10)
+
+    extension_entry = ctk.CTkEntry(
+        manager,
+        width=250
+    )
+    extension_entry.pack()
+
+    def add_category():
+
+        category = category_entry.get().strip()
+
+        extensions = [
+            ext.strip().lower()
+            for ext in extension_entry.get().split(",")
+            if ext.strip()
+        ]
+
+        if not category or not extensions:
+            messagebox.showwarning(
+                "Warning",
+                "Please fill all fields."
+            )
+            return
+
+        categories = load_categories()
+        categories[category] = extensions
+
+        save_categories(categories)
+
+        messagebox.showinfo(
+            "Success",
+            "Category added successfully!"
+        )
+
+        manager.destroy()
+
+    ctk.CTkButton(
+        manager,
+        text="Add Category",
+        command=add_category
+    ).pack(pady=20)
+
+
+root = ctk.CTk()
 root.title("File Organizer")
-root.geometry("500x300")
+root.geometry("650x450")
 root.resizable(False, False)
-root.configure(bg="#f5f5f5")
 
-folder_path = tk.StringVar()
-preview_mode = tk.BooleanVar()
+folder_path = ctk.StringVar()
+preview_mode = ctk.BooleanVar()
 
-# Title
-title = tk.Label(
+title = ctk.CTkLabel(
     root,
-    text="Python File Organizer",
-    font=("Arial", 18, "bold"),
-    bg="#f5f5f5"
+    text="📂 File Organizer",
+    font=("Arial", 28, "bold")
 )
-title.pack(pady=15)
+title.pack(pady=25)
 
-# Folder Path Entry
-entry = tk.Entry(
+entry = ctk.CTkEntry(
     root,
     textvariable=folder_path,
-    width=55
+    width=500,
+    height=40
 )
-entry.pack(pady=5)
+entry.pack(pady=10)
 
-# Browse Button
-browse_btn = tk.Button(
+ctk.CTkButton(
     root,
     text="Browse Folder",
-    width=20,
+    width=220,
+    height=40,
     command=browse_folder
-)
-browse_btn.pack(pady=10)
+).pack(pady=10)
 
-# Preview Checkbox
-preview_check = tk.Checkbutton(
+ctk.CTkCheckBox(
     root,
     text="Preview Mode",
-    variable=preview_mode,
-    bg="#f5f5f5"
-)
-preview_check.pack()
+    variable=preview_mode
+).pack(pady=10)
 
-# Organize Button
-organize_btn = tk.Button(
+ctk.CTkButton(
+    root,
+    text="Manage Categories",
+    width=220,
+    height=40,
+    command=open_category_manager
+).pack(pady=10)
+
+ctk.CTkButton(
     root,
     text="Organize Files",
-    width=20,
+    width=220,
+    height=45,
     command=start_organizing
-)
-organize_btn.pack(pady=15)
+).pack(pady=20)
 
-# Status Label
-status_label = tk.Label(
+status_label = ctk.CTkLabel(
     root,
-    text="",
-    bg="#f5f5f5",
-    fg="green",
-    font=("Arial", 10)
+    text="Ready"
 )
-status_label.pack()
+status_label.pack(pady=10)
 
 root.mainloop()
