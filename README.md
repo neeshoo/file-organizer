@@ -9,6 +9,19 @@ Built with **Python**, **Tkinter**, and packaged as a standalone Windows applica
 
 https://github.com/neeshoo/file-organizer/releases/download/v1.0.0/FileOrganizerSetup.exe
 
+NOte: ## ⚠️ Windows SmartScreen Notice
+
+Since File Organizer is an independent open-source application and is not digitally signed yet, Windows may display a "Windows protected your PC" warning.
+
+To continue:
+
+1. Click **More info**
+2. Click **Run anyway**
+
+The source code is fully available in this repository for transparency.
+
+
+
 ## ✨ Features
 
 * 📁 Automatically organizes files by extension
