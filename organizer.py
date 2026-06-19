@@ -38,9 +38,15 @@ def write_log(folder_path, file_name, category):
             f"{timestamp} - Moved: {file_name} -> {category}\n"
         )
 
-def organize_files(folder_path):
+def organize_files(folder_path, preview=False):
+    preview_data = []
+       
+    IGNORE_FILES = ["log.txt"]
 
     for file in os.listdir(folder_path):
+
+        if file in IGNORE_FILES:
+            continue
 
         file_path = os.path.join(folder_path, file)
 
@@ -49,6 +55,7 @@ def organize_files(folder_path):
             continue
 
         extension = os.path.splitext(file)[1].lower()
+
         moved = False
 
         # Check file category
@@ -61,6 +68,13 @@ def organize_files(folder_path):
 
                 destination = os.path.join(category_folder, file)
                 destination = get_unique_filename(destination)
+
+                if preview:
+                      preview_data.append(
+                      f"{file} -> {category}"
+                      )
+                      moved = True
+                      break
 
                 shutil.move(file_path, destination)
                 write_log(folder_path, os.path.basename(destination), category)
@@ -77,9 +91,17 @@ def organize_files(folder_path):
             destination = os.path.join(other_folder, file)
             destination = get_unique_filename(destination)
 
+            if preview:
+                 preview_data.append(
+                 f"{file} -> Others"
+                 )
+                 continue
+
             shutil.move(file_path, destination)
             write_log(folder_path, os.path.basename(destination), "Others")
-
+    
+    if preview:
+     return preview_data
 
 if __name__ == "__main__":
     folder = input("Enter folder path: ").strip()

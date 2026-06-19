@@ -4,8 +4,6 @@ from tkinter import filedialog, messagebox
 from organizer import organize_files
 
 
-
-
 def browse_folder():
     folder = filedialog.askdirectory()
 
@@ -25,66 +23,119 @@ def start_organizing():
         return
 
     try:
-        organize_files(path)
 
-        status_label.config(
-            text="Files organized successfully!",
-            fg="green"
-        )
+        if preview_mode.get():
+
+            result = organize_files(
+                path,
+                preview=True
+            )
+
+            if result:
+                messagebox.showinfo(
+                    "Preview",
+                    "\n".join(result)
+                )
+            else:
+                messagebox.showinfo(
+                    "Preview",
+                    "No files found to organize."
+                )
+
+            status_label.config(
+                text="Preview generated successfully!",
+                fg="blue"
+            )
+
+        else:
+
+            organize_files(path)
+
+            messagebox.showinfo(
+                "Success",
+                "Files organized successfully!"
+            )
+
+            status_label.config(
+                text="Files organized successfully!",
+                fg="green"
+            )
 
     except Exception as e:
+
+        messagebox.showerror(
+            "Error",
+            str(e)
+        )
 
         status_label.config(
             text=f"Error: {e}",
             fg="red"
         )
 
+
+# Main Window
 root = tk.Tk()
 root.title("File Organizer")
-root.geometry("500x200")
+root.geometry("500x300")
 root.resizable(False, False)
 root.configure(bg="#f5f5f5")
 
-
 folder_path = tk.StringVar()
+preview_mode = tk.BooleanVar()
 
-title = tk.Label(
-    root,
-    text="Python File Organizer",
-    font=("Arial", 16, "bold")
-)
-title.pack(pady=10)
+# Title
 title = tk.Label(
     root,
     text="Python File Organizer",
     font=("Arial", 18, "bold"),
     bg="#f5f5f5"
 )
+title.pack(pady=15)
 
+# Folder Path Entry
 entry = tk.Entry(
     root,
     textvariable=folder_path,
-    width=50
+    width=55
 )
 entry.pack(pady=5)
 
+# Browse Button
 browse_btn = tk.Button(
     root,
     text="Browse Folder",
+    width=20,
     command=browse_folder
 )
-browse_btn.pack(pady=5)
+browse_btn.pack(pady=10)
 
+# Preview Checkbox
+preview_check = tk.Checkbutton(
+    root,
+    text="Preview Mode",
+    variable=preview_mode,
+    bg="#f5f5f5"
+)
+preview_check.pack()
+
+# Organize Button
 organize_btn = tk.Button(
     root,
     text="Organize Files",
+    width=20,
     command=start_organizing
 )
-organize_btn.pack(pady=10)
-status_label = tk.Label(root, text="", fg="green")
-status_label.pack(pady=5)
-browse_btn.config(width=20)
-organize_btn.config(width=20)
+organize_btn.pack(pady=15)
 
+# Status Label
+status_label = tk.Label(
+    root,
+    text="",
+    bg="#f5f5f5",
+    fg="green",
+    font=("Arial", 10)
+)
+status_label.pack()
 
 root.mainloop()
